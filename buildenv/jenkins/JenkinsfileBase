@@ -600,11 +600,12 @@ def runTest( ) {
 	script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} >/dev/null & echo \$!",
 						returnStdout: true
 					).trim()
-					echo "xServer is ${xServer}"
+					echo "xServer PID is ${xServer}"
 					env.DISPLAY = "unix:${xSEED}"
 					echo "env.DISPLAY is ${env.DISPLAY}"
 					makeTest("${RUNTEST_CMD}")
-					// X11Server.waitForOrKill(0)
+					echo "kill xServer PID is ${xServer}"
+					sh "kill ${xServer}"
 				}
 				else if (env.SPEC.startsWith('sunos')) {
 					sh "nohup /usr/X11/bin/Xvfb :2 -screen 0 1024x768x24 &"
