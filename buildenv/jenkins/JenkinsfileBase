@@ -595,8 +595,8 @@ def runTest( ) {
 						script: 'date -u +"%u%M"',
 						returnStdout: true
 					).trim()
+					// looking for documentation for a multi-line script
 					def xServer = sh (
-						// looking for documentation for a multi-line script
 script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} & echo $!",
 						returnStatus: true
 					).trim()
