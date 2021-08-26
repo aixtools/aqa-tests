@@ -596,7 +596,7 @@ def runTest( ) {
 						returnStdout: true
 					).trim()
 					def xServer = sh (
-						script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} &
+						script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} & \
                                                 echo $!",
 						returnStatus: true
 					).trim()
