@@ -599,7 +599,6 @@ def runTest( ) {
 					def xServer = sh (
 // mycmd = "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} & echo \$!",
 script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} & echo \$!",
-						returnStatus: true
 					).trim()
 					echo "xServer is ${xServer}"
 					env.DISPLAY = "unix:${xSEED}"
