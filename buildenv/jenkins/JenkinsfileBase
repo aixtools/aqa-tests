@@ -595,12 +595,16 @@ def runTest( ) {
 						script: 'date -u +"%u%M"',
 						returnStdout: true
 					).trim()
-					// sh "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} &"
-					def X11Server = "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} &".execute()
+					def xServer = sh (
+						script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xSEED} &
+                                                echo $!",
+						returnStatus: true
+					).trim()
+					echo "xServer is ${xServer}"
 					env.DISPLAY = "unix:${xSEED}"
 					echo "env.DISPLAY is ${env.DISPLAY}"
 					makeTest("${RUNTEST_CMD}")
-					X11Server.waitForOrKill(0)
+					// X11Server.waitForOrKill(0)
 				}
 				else if (env.SPEC.startsWith('sunos')) {
 					sh "nohup /usr/X11/bin/Xvfb :2 -screen 0 1024x768x24 &"
