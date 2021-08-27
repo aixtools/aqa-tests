@@ -610,6 +610,12 @@ script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xDi
 				).trim()
 				env.DISPLAY = ":2"
 			}
+			echo "ITERATIONS: ${ITERATIONS}"
+			echo "env.SPEC: ${env.SPEC}"
+			echo "LABEL: ${LABEL}"
+			echo "CLOUD_PROVIDER: ${CLOUD_PROVIDER}"
+			echo "xServer: ${xServer}"
+			echo "env.DISPLAY: ${env.DISPLAY}"
 			if (xServer != 0)
 				echo "xServer PID is ${xServer}"
 			if (${env.DISPLAY} != '')
@@ -624,6 +630,7 @@ script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xDi
 							returnStdout: true
 						).trim()
 						env.DISPLAY = "${DISPLAY}"
+						echo "env.DISPLAY is ${env.DISPLAY}"
 						makeTest("${RUNTEST_CMD}")
 					}
 				}
