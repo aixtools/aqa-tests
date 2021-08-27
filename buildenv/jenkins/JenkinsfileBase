@@ -576,7 +576,7 @@ def runTest( ) {
 			).trim()
 			def xServer = 0
 
-			TARGET = "${params.TARGET}"
+			TARGET = "${params.TARGET}";
 			if (TARGET.contains('custom') && CUSTOM_TARGET!='') {
 				if (TARGET == 'system_custom') {
 					env.SYSTEM_CUSTOM_TARGET=CUSTOM_TARGET
@@ -594,6 +594,7 @@ def runTest( ) {
 				}
 			}
 			RUNTEST_CMD = "${TARGET} ${CUSTOM_OPTION}"
+	stage('xServer_nowrap') {
 			// Start a X server without a wrap()
 			if (env.SPEC.startsWith('aix')) {
 				// looking for documentation for a multi-line script
@@ -614,12 +615,14 @@ script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xDi
 				echo "xServer PID is ${xServer}"
 			if (${env.DISPLAY} != '')
 				echo "env.DISPLAY is ${env.DISPLAY}"
+	}
 			echo "env.SPEC: ${env.SPEC}"
 			echo "LABEL: ${LABEL}"
 			echo "CLOUD_PROVIDER: ${CLOUD_PROVIDER}"
 			echo "xServer: ${xServer}"
 			echo "env.DISPLAY: ${env.DISPLAY}"
 			echo "ITERATIONS: ${ITERATIONS}"
+	stage('running') {
 			for (int i = 1; i <= ITERATIONS; i++) {
 				echo "ITERATION: ${i}/${ITERATIONS}"
 				sh 'sleep 10'
@@ -639,6 +642,7 @@ script: "nohup /usr/bin/X11/X -force -vfb -x abx -x dbe -x GLX -secIP 000 :${xDi
 					makeTest("${RUNTEST_CMD}")
 				}
 			}
+	}
 			if (xServer != 0) {
 				echo "kill xServer PID is ${xServer}"
 				sh "kill ${xServer}"
